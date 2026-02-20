@@ -12,14 +12,24 @@ interface UserData {
 }
 
 // reusable function 
-function myCustomFetcher<T>(url : string, options? : RequestInit) : Promise<T> {
+async function myCustomFetcher<T>(url : string, options? : RequestInit) : Promise<T> {
+
+    const response = await fetch(url, options);
     
+    if(!response.ok){
+        throw new Error(
+            ` Network response was not ok - status : ${response.status} `
+            );
+    }
+
+    const data = response.json();
+    return data;
+
 }
 
 function fetchUserData(url : string) {
-    myCustomFetcher(url, {});
+    myCustomFetcher<UserData[]>(url, {});
 }
-
 
 // default function call 
 fetchUserData("https://api.github.com/users");
