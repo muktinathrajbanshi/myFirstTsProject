@@ -74,7 +74,25 @@ formSubmit.addEventListener("submit", async (e) => {
     try {
         const url = "https://api.github.com/users";
 
-        const allUserInfo =  await myCustomFetcher(url, {})
+        const allUserData =  await myCustomFetcher<UserData[]>(url, {});
+
+        const matchingUsers = allUserData.filter((user) => {
+            return user.login.toLowerCase().includes(searchTerm);
+        });
+
+        // we need to clear the previous data 
+        main_container.innerHTML = "";
+
+        if(matchingUsers.length === 0) {
+            main_container.insertAdjacentHTML(
+                "beforeend",
+                `<p class="empty-msg"> No matching users found. </p>`
+            );
+        } else {
+            for(const singleUser of matchingUsers) {
+                showResultUI(singleUser);
+            }
+        }
 
     } catch (error) {
         console.log(error);
