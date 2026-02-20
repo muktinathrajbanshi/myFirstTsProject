@@ -1,6 +1,6 @@
 const getUsername = document.querySelector("#user") as HTMLInputElement;
 const formSubmit = document.querySelector(".form") as HTMLFormElement;
-const main_container = document.querySelector(".main-container") as HTMLElement;
+const main_container = document.querySelector(".main_container") as HTMLElement;
 
 // so lets define the contract of an object 
 interface UserData {
@@ -22,13 +22,43 @@ async function myCustomFetcher<T>(url : string, options? : RequestInit) : Promis
             );
     }
 
-    const data = response.json();
+    const data = await response.json();
+    console.log(data);
+    
     return data;
 
 }
 
+// let's display the card UI 
+const showResultUI = (singleUser : UserData) => {
+
+const { avatar_url, login, url } = singleUser;
+
+main_container.insertAdjacentHTML(
+    "beforeend",
+    `
+     <div class="card">
+      <img src="${avatar_url}" alt="${login}" />
+      <h3>${login}</h3>
+
+      <div class="card-footer">
+        <a href="${url}" target="_blank">GitHub Profile</a>
+      </div>
+    </div>
+    
+    `
+)
+
+};
+
 function fetchUserData(url : string) {
-    myCustomFetcher<UserData[]>(url, {});
+    myCustomFetcher<UserData[]>(url, {}).then((userInfo) => {
+        for(const singleUser of userInfo) {
+            showResultUI(singleUser);
+            console.log("login " + singleUser.login);
+            
+        }
+    });
 }
 
 // default function call 
