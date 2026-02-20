@@ -1,5 +1,5 @@
 const getUsername = document.querySelector("#user") as HTMLInputElement;
-const formSubmit = document.querySelector(".form") as HTMLFormElement;
+const formSubmit = document.querySelector("#form") as HTMLFormElement;
 const main_container = document.querySelector(".main_container") as HTMLElement;
 
 // so lets define the contract of an object 
@@ -63,3 +63,22 @@ function fetchUserData(url : string) {
 
 // default function call 
 fetchUserData("https://api.github.com/users");
+
+// let perform search fun 
+
+formSubmit.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const searchTerm = getUsername.value.toLowerCase();
+
+    try {
+        const url = "https://api.github.com/users";
+
+        const allUserInfo =  await myCustomFetcher(url, {})
+
+    } catch (error) {
+        console.log(error);
+        
+    }
+
+})
