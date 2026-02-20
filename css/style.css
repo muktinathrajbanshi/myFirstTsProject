@@ -17,6 +17,7 @@
 }
 
 body {
+  width: 100%;
   min-height: 100vh;
   background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
   display: flex;
@@ -151,6 +152,15 @@ body {
 .card-footer a:hover {
   transform: scale(1.1);
   box-shadow: 0 0 35px rgba(255, 78, 205, 0.8);
+}
+.empty-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: left;
+  margin-left: -3.5rem;
+  width: 100vw;
 }
 
 /* mobile responsive design  */
